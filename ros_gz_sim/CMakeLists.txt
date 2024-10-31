@@ -168,6 +168,10 @@ if(BUILD_TESTING)
     test/test_create.cpp
   )
 
+  ament_add_gtest_executable(test_remove
+    test/test_remove.cpp
+  )
+
   ament_target_dependencies(test_stopwatch rclcpp)
 
   target_include_directories(test_stopwatch PUBLIC
@@ -182,12 +186,17 @@ if(BUILD_TESTING)
     gz-transport::core
   )
 
+  target_link_libraries(test_remove
+    gz-transport::core
+  )
+
   install(
-    TARGETS test_stopwatch test_create
+    TARGETS test_stopwatch test_create test_remove
     DESTINATION lib/${PROJECT_NAME}
   )
   ament_add_gtest_test(test_stopwatch)
   add_launch_test(test/test_create_node.launch.py TIMEOUT 200)
+  add_launch_test(test/test_remove_node.launch.py TIMEOUT 200)
 endif()
 
 ament_package()
